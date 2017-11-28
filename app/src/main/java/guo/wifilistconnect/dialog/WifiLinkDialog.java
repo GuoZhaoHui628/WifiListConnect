@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import guo.wifilistconnect.MainActivity;
 import guo.wifilistconnect.R;
 import guo.wifilistconnect.WifiSupport;
 
@@ -105,8 +106,13 @@ public class WifiLinkDialog extends Dialog implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.cofirm_button:{
-                WifiConfiguration wifiConfiguration =  WifiSupport.createWifiConfig(text_nameString,password_edit.getText().toString(),WifiSupport.getWifiCipher(capabilities));
-                WifiSupport.addNetWork(wifiConfiguration,getContext());
+                WifiConfiguration tempConfig  = WifiSupport.isExsits(text_nameString,getContext());
+                if(tempConfig == null){
+                    WifiConfiguration wifiConfiguration =  WifiSupport.createWifiConfig(text_nameString,password_edit.getText().toString(),WifiSupport.getWifiCipher(capabilities));
+                    WifiSupport.addNetWork(wifiConfiguration,getContext());
+                }else{
+                    WifiSupport.addNetWork(tempConfig,getContext());
+                }
                 dismiss();
                 break;
             }
