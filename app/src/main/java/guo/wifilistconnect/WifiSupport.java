@@ -96,7 +96,7 @@ public class WifiSupport {
      */
     public static boolean addNetWork(WifiConfiguration config, Context context) {
 
-        WifiManager wifimanager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifimanager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
 
         WifiInfo wifiinfo = wifimanager.getConnectionInfo();
 

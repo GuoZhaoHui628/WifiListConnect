@@ -95,8 +95,13 @@ public class MainActivity extends AppCompatActivity {
                 if(wifiBean.getState().equals(AppContants.WIFI_STATE_UNCONNECT) || wifiBean.getState().equals(AppContants.WIFI_STATE_CONNECT)){
                     String capabilities = realWifiList.get(postion).getCapabilities();
                     if(WifiSupport.getWifiCipher(capabilities) == WifiSupport.WifiCipherType.WIFICIPHER_NOPASS){//无需密码
-                        WifiConfiguration exsits = WifiSupport.createWifiConfig(wifiBean.getWifiName(), null, WifiSupport.WifiCipherType.WIFICIPHER_NOPASS);
-                        WifiSupport.addNetWork(exsits, MainActivity.this);
+                        WifiConfiguration tempConfig  = WifiSupport.isExsits(wifiBean.getWifiName(),MainActivity.this);
+                        if(tempConfig == null){
+                            WifiConfiguration exsits = WifiSupport.createWifiConfig(wifiBean.getWifiName(), null, WifiSupport.WifiCipherType.WIFICIPHER_NOPASS);
+                            WifiSupport.addNetWork(exsits, MainActivity.this);
+                        }else{
+                            WifiSupport.addNetWork(tempConfig, MainActivity.this);
+                        }
                     }else{   //需要密码，弹出输入密码dialog
                         noConfigurationWifi(postion);
                     }
